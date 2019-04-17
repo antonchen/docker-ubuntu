@@ -1,0 +1,29 @@
+#!/usr/bin/with-contenv bash
+PUID=${PUID:-911}
+PGID=${PGID:-911}
+TZ=${TZ:-UTC}
+
+cat << "EOF"
+-------------------------------------
+  _    _   _                       _           
+ | |  | | | |                     | |          
+ | |  | | | |__    _   _   _ __   | |_   _   _ 
+ | |  | | | '_ \  | | | | | '_ \  | __| | | | |
+ | |__| | | |_) | | |_| | | | | | | |_  | |_| |
+  \____/  |_.__/   \__,_| |_| |_|  \__|  \__,_|
+                                               
+-------------------------------------
+EOF
+
+groupmod -o -g "$PGID" ubuntu
+usermod -o -u "$PUID" ubuntu
+
+echo "
+GID/UID
+-------------------------------------
+User uid:    $(id -u ubuntu)
+User gid:    $(id -g ubuntu)
+-------------------------------------"
+
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+echo $TZ > /etc/timezone
